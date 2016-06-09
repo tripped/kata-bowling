@@ -24,4 +24,12 @@ scoreOne (score, (pins, frame, second, mult)) roll =
     rerack = standing == 0 || second      -- Rerack on clear or second roll
 
 bowlingScore :: [Int] -> Int
-bowlingScore = fst . foldl scoreOne (0, (10, 1, False, 1))
+bowlingScore = fst . foldl scoreOne initialState
+
+-- The initial state of a game of bowling.
+-- Score:           0
+-- Pins standing:   10
+-- Frame:           1
+-- Second roll?     False
+-- Roll multiplier: 1
+initialState = (0, (10, 1, False, 1))
