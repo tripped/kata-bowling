@@ -3,7 +3,27 @@ module Lib
     , playGame
     ) where
 
+-- * Non-TDD Flavor * --
+-- This version of the bowling game score function was written entirely from
+-- ad-hoc design; no tests were written until the initial implementation was
+-- done. Gaze upon its craptacularity!
+
+-- The initial state of a game of bowling.
+-- Score:           0
+-- Pins standing:   10
+-- Frame:           1
+-- Second roll?     False
+-- Multipliers:     (1, 1) == (current roll, next roll)
+initialState = (0, (10, 1, False, (1, 1)))
+
+-- Type alias, just for signature brevity
 type GameState = (Int, (Int, Int, Bool, (Int, Int)))
+
+playGame :: [Int] -> GameState
+playGame = foldl scoreOne initialState
+
+bowlingScore :: [Int] -> Int
+bowlingScore = fst . playGame
 
 scoreOne :: GameState -> Int -> GameState
 scoreOne (score, (pins, frame, second, mult)) roll =
@@ -24,16 +44,5 @@ scoreOne (score, (pins, frame, second, mult)) roll =
     standing = pins - roll
     rerack = standing == 0 || second              -- Rerack on clear/second roll
 
-playGame :: [Int] -> GameState
-playGame = foldl scoreOne initialState
-
-bowlingScore :: [Int] -> Int
-bowlingScore = fst . playGame
-
--- The initial state of a game of bowling.
--- Score:           0
--- Pins standing:   10
--- Frame:           1
--- Second roll?     False
--- Multipliers:     (1, 1)
-initialState = (0, (10, 1, False, (1, 1)))
+-- * TDD Flavor * --
+-- (TODO)
