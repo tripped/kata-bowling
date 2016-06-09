@@ -2,10 +2,8 @@ module Lib
     ( bowlingScore
     ) where
 
---bowlingScore :: [Int] -> (Int, (Int, Int, Bool, Int))
 bowlingScore :: [Int] -> Int
 bowlingScore = fst . foldl m (0, (10, 1, False, 1)) where
-    m :: (Int, (Int, Int, Bool, Int)) -> Int -> (Int, (Int, Int, Bool, Int))
     m (score, (pins, frame, second, mult)) roll =
         (score', (pins', frame', second', mult')) where
             score' = score + roll * mult
