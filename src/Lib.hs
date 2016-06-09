@@ -1,13 +1,15 @@
 module Lib
     ( bowlingScore
+    , playGame
     ) where
 
-type GameState = (Int, (Int, Int, Bool, Int))
+type GameState = (Int, (Int, Int, Bool, (Int, Int)))
 
 scoreOne :: GameState -> Int -> GameState
 scoreOne (score, (pins, frame, second, mult)) roll =
   (score', (pins', frame', second', mult')) where
-    score' = score + roll * mult
+    (bonus, next) = mult
+    score' = score + roll * bonus
     pins'
       | rerack = 10
       | otherwise = standing
@@ -16,12 +18,11 @@ scoreOne (score, (pins, frame, second, mult)) roll =
       | otherwise = frame
     second' = not rerack
     mult'
-      | frame >= 10 = 1                   -- No mult after frame 10
-      | standing > 0 = max 1 $ mult - 1   -- Crap!
-      | second = 2                        -- Spare!
-      | otherwise = 3                     -- Strike!
+      | standing > 0 || frame >= 10 = (next, 1)   -- No bonus after 10th frame
+      | second = (next + 1, 1)                    -- Spare!
+      | otherwise = (next + 1, 2)                 -- Strike!
     standing = pins - roll
-    rerack = standing == 0 || second      -- Rerack on clear or second roll
+    rerack = standing == 0 || second              -- Rerack on clear/second roll
 
 playGame :: [Int] -> GameState
 playGame = foldl scoreOne initialState
@@ -34,5 +35,5 @@ bowlingScore = fst . playGame
 -- Pins standing:   10
 -- Frame:           1
 -- Second roll?     False
--- Roll multiplier: 1
-initialState = (0, (10, 1, False, 1))
+-- Multipliers:     (1, 1)
+initialState = (0, (10, 1, False, (1, 1)))

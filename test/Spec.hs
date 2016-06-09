@@ -26,8 +26,10 @@ main = hspec $ do
         it "tallies 299 for 11 strikes and one moment of regret" $ do
             bowlingScore [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9]
             `shouldBe` 299
-        it "correctly scores multiplier for second 10th frame roll" $ do
-            -- XXX: uh oh, spaghetti-os! This gets 290 somehow.
+        it "correctly scores multiplier after 10th frame spare" $ do
+            bowlingScore [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                          0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 10] `shouldBe` 20
+        it "correctly scores multiplier after 10th frame strike" $ do
             bowlingScore [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 10]
             --          ∑ 30  30  30  30  30  30  30  30  20  10  0  10 = 280
             `shouldBe` 280
