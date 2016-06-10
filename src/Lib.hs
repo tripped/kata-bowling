@@ -3,6 +3,8 @@ module Lib
     , playGame
     ) where
 
+import Data.List
+
 -- * Non-TDD Flavor * --
 -- This version of the bowling game score function was written entirely from
 -- ad-hoc design; no tests were written until the initial implementation was
@@ -20,7 +22,7 @@ initialState = (0, (10, 1, False, (1, 1)))
 type GameState = (Int, (Int, Int, Bool, (Int, Int)))
 
 playGame :: [Int] -> GameState
-playGame = foldl scoreOne initialState
+playGame = foldl' scoreOne initialState
 
 bowlingScore :: [Int] -> Int
 bowlingScore = fst . playGame
