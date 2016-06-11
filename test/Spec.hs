@@ -1,9 +1,9 @@
 import Test.Hspec
-import Lib
+import NonTDD
 
 main :: IO ()
 main = hspec $ do
-    describe "bowlingScore" $ do
+    describe "non-TDD bowlingScore" $ do
         it "tallies 0 for a crap game" $ do
             bowlingScore $ take 10 $ repeat 0
             `shouldBe` 0

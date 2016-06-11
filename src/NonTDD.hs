@@ -1,4 +1,4 @@
-module Lib
+module NonTDD
     ( bowlingScore
     , playGame
     ) where
@@ -45,6 +45,3 @@ scoreOne (score, (pins, frame, second, mult)) roll =
       | otherwise = (next + 1, 2)                 -- Strike!
     standing = pins - roll
     rerack = standing == 0 || second              -- Rerack on clear/second roll
-
--- * TDD Flavor * --
--- (TODO)
