@@ -31,6 +31,7 @@ test-suite bowling-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       NonTDDSpec
   build-depends:       base
                      , bowling
                      , hspec
