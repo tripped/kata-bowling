@@ -12,3 +12,6 @@ spec = do
     describe "TDD bowling" $ do
         it "exists" $ do
             bowl [] `shouldBe` 0
+        it "scores 0 on a gutter game" $ do
+            bowl $ take 20 $ repeat 0
+            `shouldBe` 0
