@@ -15,3 +15,6 @@ spec = do
         it "scores 0 on a gutter game" $ do
             bowl $ take 20 $ repeat 0
             `shouldBe` 0
+        it "scores 20 on all ones" $ do
+            bowl $ take 20 $ repeat 1
+            `shouldBe` 20
