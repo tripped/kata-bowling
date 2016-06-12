@@ -7,14 +7,17 @@ import TDD
 main :: IO ()
 main = hspec spec
 
+rollMany :: Int -> Int -> [Int]
+rollMany count pins = take count $ repeat pins
+
 spec :: Spec
 spec = do
     describe "TDD bowling" $ do
         it "exists" $ do
             bowl [] `shouldBe` 0
         it "scores 0 on a gutter game" $ do
-            bowl $ take 20 $ repeat 0
+            bowl $ rollMany 20 0
             `shouldBe` 0
         it "scores 20 on all ones" $ do
-            bowl $ take 20 $ repeat 1
+            bowl $ rollMany 20 1
             `shouldBe` 20
