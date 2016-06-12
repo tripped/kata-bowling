@@ -8,7 +8,7 @@ main :: IO ()
 main = hspec spec
 
 rollMany :: Int -> Int -> [Int]
-rollMany count pins = take count $ repeat pins
+rollMany = (. repeat) . take
 
 spec :: Spec
 spec = do
