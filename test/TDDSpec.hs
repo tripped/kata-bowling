@@ -11,4 +11,4 @@ spec :: Spec
 spec = do
     describe "TDD bowling" $ do
         it "exists" $ do
-            1 `shouldBe` 1
+            bowl [] `shouldBe` 0

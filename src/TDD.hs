@@ -1,2 +1,5 @@
 module TDD
-    ( ) where
+    ( bowl ) where
+
+bowl :: [Int] -> Int
+bowl _ = 0
