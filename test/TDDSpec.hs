@@ -19,3 +19,6 @@ spec = do
         it "scores 20 on all ones" $ do
             bowl $ rollMany 20 1
             `shouldBe` 20
+        it "scores a spare" $ do
+            bowl $ [5, 5, 3] ++ rollMany 17 0
+            `shouldBe` 16
