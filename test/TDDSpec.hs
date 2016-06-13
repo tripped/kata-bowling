@@ -25,3 +25,6 @@ spec = do
         it "doesn't erroneously score non-spare" $ do
             bowl $ [0, 5, 5, 3] ++ rollMany 16 0
             `shouldBe` 13
+        it "scores a strike" $ do
+            bowl $ [10, 5, 1] ++ rollMany 16 0
+            `shouldBe` 22
