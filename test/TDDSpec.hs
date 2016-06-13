@@ -13,8 +13,6 @@ rollMany = (. repeat) . take
 spec :: Spec
 spec = do
     describe "TDD bowling" $ do
-        it "exists" $ do
-            bowl [] `shouldBe` 0
         it "scores 0 on a gutter game" $ do
             bowl $ rollMany 20 0
             `shouldBe` 0
