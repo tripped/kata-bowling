@@ -22,3 +22,6 @@ spec = do
         it "scores a spare" $ do
             bowl $ [5, 5, 3] ++ rollMany 17 0
             `shouldBe` 16
+        it "doesn't erroneously score non-spare" $ do
+            bowl $ [0, 5, 5, 3] ++ rollMany 16 0
+            `shouldBe` 13
