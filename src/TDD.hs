@@ -3,23 +3,37 @@ module TDD
 
 import Data.List
 
+data Frame = Strike | Spare Int | Open Int Int
+    deriving Show
+
 bowl :: [Int] -> Int
 bowl l = sum $ map (score.reverse) (inits.frames $ l)
     where
-        score [] = 0
-        score (frame:prevFrame:_)
-            | isStrike prevFrame = scoreFrameAfterStrike frame
-            | isSpare prevFrame = scoreFrameAfterSpare frame
-            | otherwise = scoreFrame frame
-        score (frame:_) = scoreFrame frame
+        score (f:Strike:Strike:_) = scoreAfterDoubleStrike f
+        score (f:Strike:_) = scoreAfterStrike f
+        score (f:Spare _:_) = scoreAfterSpare f
+        score (f:_) = scoreNormal f
+        score _ = 0
 
-        isSpare f = 10 == scoreFrame f && not (isStrike f)
-        isStrike = (==) (10, 0)
-        scoreFrame (r1, r2) = r1 + r2
-        scoreFrameAfterSpare (r1, r2) = 2*r1 + r2
-        scoreFrameAfterStrike (r1, r2) = 2*(r1 + r2)
+        scoreAfterDoubleStrike Strike = 30
+        scoreAfterDoubleStrike (Spare x) = 20 + x
+        scoreAfterDoubleStrike (Open x y) = 3*x + 2*y
 
-frames :: [Int] -> [(Int, Int)]
+        scoreAfterStrike Strike = 20
+        scoreAfterStrike (Spare _) = 20
+        scoreAfterStrike (Open x y) = 2*(x + y)
+
+        scoreAfterSpare Strike = 20
+        scoreAfterSpare (Spare x) = 10 + x
+        scoreAfterSpare (Open x y) = 2*x + y
+
+        scoreNormal Strike = 10
+        scoreNormal (Spare _) = 10
+        scoreNormal (Open x y) = x + y
+
+frames :: [Int] -> [Frame]
 frames [] = []
-frames (10:xs) = (10, 0):(frames xs)
-frames (x:y:xs) = (x, y):(frames xs)
+frames (10:xs) = Strike:(frames xs)
+frames (x:y:xs)
+    | x + y == 10 = (Spare x):(frames xs)
+    | otherwise = (Open x y):(frames xs)

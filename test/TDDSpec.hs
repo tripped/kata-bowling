@@ -28,3 +28,6 @@ spec = do
         it "scores a strike" $ do
             bowl $ [10, 5, 1] ++ rollMany 16 0
             `shouldBe` 22
+        it "scores several strikes" $ do
+            bowl $ [10, 10, 10, 2, 1] ++ rollMany 12 0
+            `shouldBe` 68
