@@ -13,8 +13,8 @@ bowl l = sum $ map (score.reverse) (inits.frames $ l)
             | otherwise = scoreFrame frame
         score (frame:_) = scoreFrame frame
 
-        isSpare (r1, r2) = r1 + r2 == 10
-        isStrike frame = frame == (10, 0)
+        isSpare f = 10 == scoreFrame f && not (isStrike f)
+        isStrike = (==) (10, 0)
         scoreFrame (r1, r2) = r1 + r2
         scoreFrameAfterSpare (r1, r2) = 2*r1 + r2
         scoreFrameAfterStrike (r1, r2) = 2*(r1 + r2)
