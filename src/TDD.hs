@@ -12,22 +12,18 @@ bowl l = sum $ map score $ take 10 (windows.frames $ l)
         score (Spare _ : rs) = 10 + oneRoll rs
         score (Open x y : _) = x + y
 
-        twoRolls [] = 0
         twoRolls (Open x y : _) = x + y
         twoRolls (Spare _ : _) = 10
         twoRolls (Strike : rs) = 10 + oneRoll rs
 
-        oneRoll [] = 0
         oneRoll (Open x _ : _) = x
         oneRoll (Spare x : _) = x
         oneRoll (Strike : _) = 10
 
-        frames [] = []
         frames (10:xs) = Strike : (frames xs)
         frames [x] = [Open x 0]
         frames (x:y:xs)
             | x + y == 10 = Spare x : (frames xs)
             | otherwise = Open x y : (frames xs)
 
-        windows [] = []
         windows all@(x:xs) = take 3 all : windows xs
