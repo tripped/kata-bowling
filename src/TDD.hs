@@ -1,35 +1,30 @@
 module TDD
-    ( bowl, frames ) where
+    ( bowl ) where
 
 import Data.List
 
 data Frame = Strike | Spare Int | Open Int Int
     deriving Show
 
-bowl :: [Int] -> Int
-bowl l = sum $ map (score.reverse) (inits.frames $ l)
-    where
-        score (f:Strike:Strike:_) = scoreAfterDoubleStrike f
-        score (f:Strike:_) = scoreAfterStrike f
-        score (f:Spare _:_) = scoreAfterSpare f
-        score (f:_) = scoreNormal f
-        score _ = 0
+windows :: [Frame] -> [[Frame]]
+windows [] = []
+windows all@(x:xs) = take 3 all : windows xs
 
-        scoreAfterDoubleStrike Strike = 30
-        scoreAfterDoubleStrike (Spare x) = 20 + x
-        scoreAfterDoubleStrike (Open x y) = 3*x + 2*y
+bowl l = sum $ map score $ take 10 (windows.frames $ l)
+    where 
+        score (Strike : rs) = 10 + twoRolls rs
+        score (Spare _ : rs) = 10 + oneRoll rs
+        score (Open x y : _) = x + y
 
-        scoreAfterStrike Strike = 20
-        scoreAfterStrike (Spare _) = 20
-        scoreAfterStrike (Open x y) = 2*(x + y)
+        twoRolls [] = 0
+        twoRolls (Open x y : _) = x + y
+        twoRolls (Spare _ : _) = 10
+        twoRolls (Strike : rs) = 10 + oneRoll rs
 
-        scoreAfterSpare Strike = 20
-        scoreAfterSpare (Spare x) = 10 + x
-        scoreAfterSpare (Open x y) = 2*x + y
-
-        scoreNormal Strike = 10
-        scoreNormal (Spare _) = 10
-        scoreNormal (Open x y) = x + y
+        oneRoll [] = 0
+        oneRoll (Open x _ : _) = x
+        oneRoll (Spare x : _) = x
+        oneRoll (Strike : _) = 10
 
 frames :: [Int] -> [Frame]
 frames [] = []

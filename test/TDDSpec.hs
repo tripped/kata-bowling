@@ -31,3 +31,6 @@ spec = do
         it "scores several strikes" $ do
             bowl $ [10, 10, 10, 2, 1] ++ rollMany 12 0
             `shouldBe` 68
+        it "scores a perfect game" $ do
+            bowl $ rollMany 12 10
+            `shouldBe` 300
