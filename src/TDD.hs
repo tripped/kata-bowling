@@ -4,7 +4,7 @@ import Data.List
 
 data Frame = Strike | Spare Int | Open Int Int
 
-bowl l = sum $ map score $ take 10 (windows.frames $ l)
+bowl = sum . map score . take 10 . windows . frames
     where 
         -- Split a (valid) list of rolls into frames
         frames (10:xs) = Strike : (frames xs)
