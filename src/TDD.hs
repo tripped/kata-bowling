@@ -3,7 +3,6 @@ module TDD
 import Data.List
 
 data Frame = Strike | Spare Int | Open Int Int
-    deriving Show
 
 bowl l = sum $ map score $ take 10 (windows.frames $ l)
     where 
