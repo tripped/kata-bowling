@@ -28,7 +28,8 @@ bowl l = sum $ map score $ take 10 (windows.frames $ l)
 
 frames :: [Int] -> [Frame]
 frames [] = []
-frames (10:xs) = Strike:(frames xs)
+frames (10:xs) = Strike : (frames xs)
+frames [x] = [Open x 0]
 frames (x:y:xs)
-    | x + y == 10 = (Spare x):(frames xs)
-    | otherwise = (Open x y):(frames xs)
+    | x + y == 10 = Spare x : (frames xs)
+    | otherwise = Open x y : (frames xs)

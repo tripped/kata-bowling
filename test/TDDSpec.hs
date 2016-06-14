@@ -34,3 +34,16 @@ spec = do
         it "scores a perfect game" $ do
             bowl $ rollMany 12 10
             `shouldBe` 300
+        it "tallies 100 for a gutter-spare game" $ do
+            bowl [ 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0, 10
+                 , 0
+                 ] `shouldBe` 100
