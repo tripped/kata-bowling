@@ -1,6 +1,5 @@
 module TDD
     ( bowl ) where
-import Data.List
 
 data Frame = Strike | Spare Int | Open Int Int
 
