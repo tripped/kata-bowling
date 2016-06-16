@@ -1,9 +1,11 @@
 module TDD
     ( bowl ) where
 
+import Data.List
+
 data Frame = Strike | Spare Int | Open Int Int
 
-bowl = sum . map score . take 10 . windows . frames
+bowl = sum . map score . take 10 . tails . frames
     where 
         -- Split a (valid) list of rolls into frames
         frames (10:xs) = Strike : frames xs
@@ -11,9 +13,6 @@ bowl = sum . map score . take 10 . windows . frames
         frames (x:y:xs)
             | x + y == 10 = Spare x : frames xs
             | otherwise = Open x y : frames xs
-
-        -- Scoring is done on windows consisting of up to two following frames
-        windows all@(x:xs) = take 3 all : windows xs
 
         score (Strike : after) = 10 + sum (take 2 $ rolls after)
         score (Spare _ : after) = 10 + sum (take 1 $ rolls after)
