@@ -1,7 +1,7 @@
 module NonTDD
-    ( bowlingScore
-    , playGame
-    ) where
+  ( bowlingScore
+  , playGame
+  ) where
 
 import Data.List
 
